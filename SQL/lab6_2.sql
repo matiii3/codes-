@@ -1,0 +1,129 @@
+ZAD.1
+
+SELECT ID_ZESP, NAZWA, ADRES
+FROM ZESPOLY Z 
+WHERE NOT EXISTS
+(
+    SELECT UNIQUE ID_ZESP
+    FROM PRACOWNICY
+    WHERE ID_ZESP=Z.ID_ZESP
+)
+
+ZAD.2
+SELECT NAZWISKO, PLACA_POD, ETAT
+FROM PRACOWNICY P
+WHERE PLACA_POD > 
+(SELECT AVG(PLACA_POD)
+FROM PRACOWNICY
+WHERE ETAT = P.ETAT
+GROUP BY ETAT)
+ORDER BY PLACA_POD DESC 
+
+ZAD.3
+SELECT NAZWISKO, PLACA_POD, ETAT
+FROM PRACOWNICY P
+WHERE PLACA_POD > 
+(SELECT AVG(PLACA_POD)
+FROM PRACOWNICY
+WHERE ETAT = P.ETAT
+GROUP BY ETAT)
+ORDER BY PLACA_POD DESC 
+
+ZAD.4
+SELECT nazwisko
+FROM pracownicy p1
+WHERE etat = 'PROFESOR'
+  AND NOT EXISTS (
+    SELECT 1
+    FROM pracownicy p2
+    WHERE p2.id_szefa = p1.id_prac
+      AND p2.etat = 'STAZYSTA'
+  );
+
+ZAD.6
+SELECT nazwisko, PLACA_POD
+FROM Pracownicy p
+WHERE 3 > (
+    SELECT COUNT(*)
+    FROM Pracownicy 
+    WHERE PLACA_POD > p.PLACA_POD
+)
+ORDER BY PLACA_POD DESC;
+
+ZAD.7
+SELECT NAZWISKO,
+       PLACA_POD,
+       PLACA_POD - (SELECT AVG(PLACA_POD)
+                      FROM PRACOWNICY 
+                      WHERE ID_ZESP = P.ID_ZESP) AS Roznica
+FROM PRACOWNICY P
+ORDER BY NAZWISKO
+
+SELECT nazwisko, placa_pod, placa_pod - srednia_w_zespole
+FROM (SELECT id_zesp, AVG(placa_pod) AS srednia_w_zespole 
+FROM pracownicy
+GROUP BY id_zesp) z
+JOIN pracownicy p ON z.id_zesp = p.id_zesp
+ORDER BY nazwisko;
+
+zad.8
+
+SELECT NAZWISKO,
+       PLACA_POD,
+       PLACA_POD - (SELECT AVG(PLACA_POD)
+                      FROM PRACOWNICY 
+                      WHERE ID_ZESP = P.ID_ZESP) AS Roznica
+FROM PRACOWNICY P
+WHERE PLACA_POD > (SELECT AVG(PLACA_POD)
+                      FROM PRACOWNICY 
+                      WHERE ID_ZESP = P.ID_ZESP)
+ORDER BY NAZWISKO
+
+
+SELECT nazwisko, placa_pod, placa_pod - srednia_w_zespole
+FROM (SELECT id_zesp, AVG(placa_pod) AS srednia_w_zespole 
+FROM pracownicy
+GROUP BY id_zesp) z
+JOIN pracownicy p ON z.id_zesp = p.id_zesp
+WHERE placa_pod > srednia_w_zespole
+ORDER BY nazwisko;
+
+ZAD.9
+SELECT p.nazwisko,
+       (SELECT COUNT(*)
+        FROM Pracownicy 
+        WHERE id_szefa = p.id_prac) AS liczba_podwladnych
+FROM Pracownicy p
+JOIN ZESPOLY z ON p.ID_ZESP = z.ID_ZESP
+WHERE p.etat = 'PROFESOR'
+  AND z.ADRES LIKE 'PIOTROWO%'
+ORDER BY liczba_podwladnych DESC;
+
+zad.10
+SELECT NAZWA , (SELECT AVG(PLACA_POD)
+FROM PRACOWNICY 
+WHERE ID_ZESP = Z.ID_ZESP
+GROUP BY ID_ZESP) AS SREDNIA_W_ZESPOLE,
+(SELECT AVG(PLACA_POD)
+FROM PRACOWNICY) AS SREDNIA_OGOLNA,
+CASE
+    WHEN (SELECT AVG(PLACA_POD)
+FROM PRACOWNICY 
+WHERE ID_ZESP = Z.ID_ZESP
+GROUP BY ID_ZESP) IS NULL THEN '???'
+    WHEN (SELECT AVG(PLACA_POD)
+FROM PRACOWNICY 
+WHERE ID_ZESP = Z.ID_ZESP
+GROUP BY ID_ZESP) > (SELECT AVG(PLACA_POD)
+FROM PRACOWNICY) THEN ':)'
+    ELSE ':('
+END AS Nastroj
+FROM ZESPOLY Z
+
+ZAD.11
+SELECT *
+FROM ETATY E
+ORDER BY (SELECT COUNT(*)
+FROM PRACOWNICY
+WHERE ETAT= E.NAZWA
+GROUP BY ETAT) DESC, NAZWA

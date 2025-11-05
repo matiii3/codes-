@@ -1,0 +1,76 @@
+SELECT nazwisko,etat, placa_pod, placa_min, placa_max
+FROM pracownicy INNER JOIN etaty
+ON etat = nazwa
+ORDER BY ETAT, NAZWISKO
+ZAD.1
+
+
+SELECT NAZWISKO, ETAT, P.ID_ZESP, Z.NAZWA
+FROM PRACOWNICY P INNER JOIN ZESPOLY Z ON P.ID_ZESP = Z.ID_ZESP
+ORDER BY NAZWISKO
+
+ZAD.2
+SELECT NAZWISKO, ETAT, P.ID_ZESP, Z.NAZWA
+FROM PRACOWNICY P INNER JOIN ZESPOLY Z ON P.ID_ZESP = Z.ID_ZESP
+WHERE Z.ADRES LIKE 'PIOTROWO 3A'
+ORDER BY NAZWISKO
+
+ZAD.3
+SELECT nazwisko,etat, placa_pod, placa_min, placa_max
+FROM pracownicy INNER JOIN etaty
+ON etat = nazwa
+ORDER BY ETAT, NAZWISKO
+
+ZAD.4
+SELECT nazwisko,etat, placa_pod, placa_min, placa_max, 
+CASE 
+    WHEN pracownicy.PLACA_POD BETWEEN PLACA_MIN AND PLACA_MAX THEN 'OK'
+    WHEN pracownicy.PLACA_POD NOT BETWEEN PLACA_MIN AND PLACA_MAX THEN 'NIE'
+    END AS CZY_PENSJA_OK
+FROM pracownicy INNER JOIN etaty
+ON etat = nazwa
+ORDER BY ETAT, NAZWISKO
+ZAD.5
+SELECT nazwisko,etat, placa_pod, placa_min, placa_max
+FROM pracownicy INNER JOIN etaty
+ON etat = nazwa
+WHERE PLACA_POD NOT BETWEEN PLACA_MIN AND PLACA_MAX
+ORDER BY ETAT, NAZWISKO
+
+ZAD.6
+SELECT nazwisko,placa_pod, etat, nazwa AS KAT_PLAC, placa_min, placa_max
+FROM pracownicy INNER JOIN etaty
+ON placa_pod BETWEEN placa_min AND placa_max
+ORDER BY NAZWISKO, KAT_PLAC
+
+ZAD.7
+SELECT nazwisko,placa_pod, etat, nazwa AS KAT_PLAC, placa_min, placa_max
+FROM pracownicy INNER JOIN etaty
+ON placa_pod BETWEEN placa_min AND placa_max
+WHERE NAZWA LIKE 'SEKRETARKA'
+ORDER BY NAZWISKO
+
+
+ZAD.8
+SELECT p.nazwisko AS pracownik,p.ID_PRAC, s.nazwisko AS szef, p.ID_SZEFA
+FROM pracownicy p INNER JOIN pracownicy s
+ON p.id_szefa = s.id_prac
+ORDER BY P.NAZWISKO;
+
+ZAD.9
+
+
+ZAD.10
+SELECT NAZWA, COUNT(*), AVG(P.PLACA_POD)
+FROM PRACOWNICY P INNER JOIN ZESPOLY Z ON P.ID_ZESP = Z.ID_ZESP
+GROUP BY NAZWA
+
+ZAD.11
+SELECT NAZWA, 
+CASE 
+WHEN COUNT(*) BETWEEN 0 AND 2 THEN 'MALY'
+WHEN COUNT(*) BETWEEN 3 AND 6 THEN 'SREDNI'
+WHEN COUNT(*) > 6 THEN 'DUZY'
+END
+FROM PRACOWNICY P INNER JOIN ZESPOLY Z ON P.ID_ZESP = Z.ID_ZESP
+GROUP BY NAZWA
