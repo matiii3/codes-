@@ -2,5 +2,5 @@ link do strony projektu:  https://pw20we.cs.put.poznan.pl/doku.php?id=ok23:s1558
 
 
 
-login do strong: s155834
+login do strony: s155834
 hasło do strony: s155834
