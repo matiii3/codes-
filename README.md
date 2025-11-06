@@ -1,4 +1,4 @@
-## Programy, które napisałem w ramach projektów zaliczeniowych lub w ramach ćwiczeń w trakcie zajęć na kierunku Informatyka na Politechnice Poznańskiej.
+## Programy, które napisałem w ramach projektów zaliczeniowych lub ćwiczeń w trakcie zajęć na kierunku Informatyka na Politechnice Poznańskiej.
 
 Zostały one zrealizowane przeze mnie w latach 2023-2025. 
 
