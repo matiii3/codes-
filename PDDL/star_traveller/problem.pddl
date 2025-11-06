@@ -1,0 +1,70 @@
+(define (problem planets)
+(:domain stars)
+(:objects
+    p1 p2 p3 p4 p5 p6 p7
+    d1 d3 d4 d5 dx d6
+    f
+    sa sb sc sd se sx
+    m1 m2 m3 m4 m5 m6
+)
+(:init
+    (przejscie p1 p2 d1)
+    (przejscie p2 p3 f)
+    (przejscie p3 p2 f)
+    (przejscie p4 p5 f)
+    (przejscie p5 p4 f)
+    (przejscie p3 p4 d3)
+    (przejscie p3 p5 d4)
+    (przejscie p4 p3 d3)
+    (przejscie p5 p3 d4)
+    (przejscie p2 p1 d1)
+    (przejscie p1 p6 d5)
+    (przejscie p6 p7 d6)
+    (lever d1 p1)
+    (lever d3 p2)
+    (lever d4 p4)
+    (lever d5 p5)
+    (lever d6 p6)
+    (lever d1 p4)
+    (wolne f)
+    (traveler p1)
+    (not(odblokowana d1))
+    (not(odblokowana d3))
+    (not(odblokowana d4))
+    (not(odblokowana d5))
+    (blokada d1 p4)
+    (not(odblokowana d6))
+    (button p5)
+    (gwiazdozbior p6)
+    (star sa m3)
+    (star sb m4)
+    (star sc m6)
+    (star sd m1)
+    (star se m2)
+    (star sx m5)
+    (pusta sx)
+    (sasiad m1 m2)
+    (sasiad m2 m3)
+    (sasiad m4 m5)
+    (sasiad m3 m4)
+    (sasiad m1 m6)
+    (sasiad m6 m2)
+    (sasiad m6 m3)
+    (sasiad m6 m5)
+    (sasiad m6 m4)
+    (sasiad m1 m5)
+    
+
+
+)
+(:goal (and
+    (traveler p7)
+    (star sa m1)
+    (star sb m2)
+    (star sc m3)
+    (star sd m4)
+    (star se m5)
+
+
+))
+)
