@@ -1,0 +1,83 @@
+#include <OneWire.h>
+#include <DS18B20.h>
+
+#define ONEWIRE_PIN 2 // Numer pinu cyfrowego
+#define LED 13
+#define SBUTTON 12
+#define LBUTTON 11
+#define SHBUTTON 10
+
+byte address[8] = {0x28, 0x4E, 0x5A, 0x79, 0x97, 0x1, 0x3, 0x1F}; // Adres
+OneWire onewire(ONEWIRE_PIN);
+DS18B20 sensors(&onewire);
+
+float temperature;
+float max;
+float min;
+float sum;
+unsigned long time;
+
+void setup() {
+  while(!Serial);
+  Serial.begin(9600);
+  sensors.begin();
+  sensors.request(address);
+  pinMode(LED, OUTPUT);
+  pinMode(SBUTTON, INPUT_PULLUP);
+  pinMode(LBUTTON, INPUT_PULLUP);
+  pinMode(SHBUTTON, INPUT_PULLUP);
+}
+void loop() {
+  if(digitalRead(SBUTTON)==LOW){
+    temperature = sensors.readTemperature(address);
+    Serial.print(temperature);
+    Serial.println(F(" 'C"));
+    sensors.request(address);
+  }
+  if(digitalRead(LBUTTON)==LOW){
+    time=millis();
+    min=1000;
+    max=-300;
+    sum=0;
+    for(int i=0; i<18; i++){
+      temperature = sensors.readTemperature(address);
+      if(temperature>max)max=temperature;
+      if(temperature<min)min=temperature;
+      sum+=temperature;
+      digitalWrite(LED, HIGH);
+      delay(2);
+      digitalWrite(LED, LOW);
+    }
+    sum=sum-max-min;
+    sum=sum/16;
+    time=millis()-time;
+    Serial.print(sum);
+    Serial.print(F(" 'C "));
+    Serial.print(time);
+    Serial.println(F(" ms"));
+    sensors.request(address);
+  }
+  if(digitalRead(SHBUTTON)==LOW){
+    time=millis();
+    min=1000;
+    max=-300;
+    for(int i=0; i<18; i++){
+      temperature = sensors.readTemperature(address);
+      if(temperature>max)max=temperature;
+      if(temperature<min)min=temperature;
+      sum+=temperature;
+      digitalWrite(LED, HIGH);
+      delay(2);
+      digitalWrite(LED, LOW);
+    }
+    sum=sum-max-min;
+    sum=(float)((long)(100*sum)>>4)/100;
+    time=millis()-time;
+    Serial.print(sum);
+    Serial.print(F(" 'C "));
+    Serial.print(time);
+    Serial.println(F(" ms"));
+    sensors.request(address);
+  }
+  delay(1000);
+}
