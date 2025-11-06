@@ -1,0 +1,76 @@
+#include <LiquidCrystal_I2C.h>
+#include <OneWire.h>
+#include <Servo.h> //Biblioteka odpowiedzialna za serwa
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+// Ustawienie adresu układu na wskazany z poprzedniego programu np. 0x3F lub 0x27
+Servo serwomechanizm; //Tworzymy obiekt, dzięki któremu możemy odwołać się
+String cmd="";
+bool blocked=true;
+bool open=false;
+
+void changeState(){
+  blocked=!blocked;
+}
+
+void setup()
+{
+  Serial.begin(9600);
+  Serial.setTimeout(100);
+  lcd.init(); // Inicjalizacja LCD
+  lcd.backlight(); // załączenie podświetlenia
+  delay(500);
+  serwomechanizm.attach(3); //Serwomechanizm podcłączony do pinu 3
+  pinMode(2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(2), changeState, FALLING);
+}
+void loop()
+{
+  lcd.clear();
+  lcd.setCursor(0,0); // Ustawienie kursora w pozycji 0,0 (pierwszy wiersz, pierwsza kolumna)
+  if(open){
+    lcd.print("Open");
+    serwomechanizm.write(90); //Wykonaj ruch
+  }
+  else{
+    lcd.print("Closed");
+    serwomechanizm.write(0); //Wykonaj ruch
+  }
+  lcd.setCursor(0,1); // Ustawienie kursora w pozycji 0,0 (pierwszy wiersz, pierwsza kolumna)
+  if(blocked){
+    lcd.print("Blocked");
+  }
+  else{
+    lcd.print("Unblocked");
+  }
+  delay(500);
+
+  cmd="";
+  cmd=Serial.readString();
+  cmd.trim();
+
+  if(cmd!=""){
+    lcd.setCursor(0,0);
+    if((cmd!="o")&&(cmd!="c")){
+      lcd.print("Wrong cmd");
+      delay(3000);
+    }
+    else{
+      if(!blocked){
+        if(cmd=="o"){
+          if(open){
+            lcd.print("Already open");
+            delay(3000);
+          }
+          else open=true;
+        }
+        if(cmd=="c"){
+          if(!open){
+            lcd.print("Already closed");
+            delay(3000);
+          }
+          else open=false;
+        }
+      }
+    }
+  }
+}
