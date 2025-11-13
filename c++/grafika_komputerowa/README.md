@@ -11,7 +11,7 @@ Scena nie używa modeli z internetu. Są to modele, które ułożyłem sam na po
 
 # Greek Temple
 
-The project presents a projection of a Greek temple, which can be explored using the W, A, S, D keys, the up and down arrow keys, and mouse movement, which controls the camera view of the scene.
+The project presents a projection of a Greek temple, which can be explored using the W,S,A,D keys, the up and down arrow keys, and mouse movement, which controls the camera view of the scene.
 
 The scene is illuminated by two independent light sources.
 
