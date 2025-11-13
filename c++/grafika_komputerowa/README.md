@@ -1,6 +1,6 @@
 # Świątynia grecka
 
-Projekt przedstawia projekcje greckiej świątyni, po której można się poruszać za pomocą klawiszy w,a,s,d, strzałka w górę, w dół oraz ruchu myszką, która steruje kamerą na widok sceny. 
+Projekt przedstawia projekcje greckiej świątyni, po której można się poruszać za pomocą klawiszy W,S,A,D, strzałka w górę, w dół oraz ruchu myszką, która steruje kamerą na widok sceny. 
 
 
 Na scene padają dwa niezależne źródła światła. 
@@ -11,12 +11,12 @@ Scena nie używa modeli z internetu. Są to modele, które ułożyłem sam na po
 
 # Greek Temple
 
-The project presents a projection of a Greek temple, which can be explored using the **W, A, S, D** keys, the **up and down arrow keys**, and **mouse movement**, which controls the camera view of the scene.
+The project presents a projection of a Greek temple, which can be explored using the W, A, S, D keys, the up and down arrow keys, and mouse movement, which controls the camera view of the scene.
 
 The scene is illuminated by two independent light sources.
 
 The scene does not use any models from the internet. All models were created manually by me, based on basic geometric shapes (mainly cubes that I worked with during the classes).  
-Afterward, I textured these models using **.png** texture images found online.
+Afterward, I textured these models using .png texture images found online.
 
 
 
