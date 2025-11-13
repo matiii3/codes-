@@ -13,7 +13,7 @@ Sama aplikacja nie jest już dostępna, ponieważ na okres jedynie jednego semes
 
 >Tematykę (modelowaną rzeczywistość) projektu grupa wymyśla samodzielnie. Ma być ona na tyle pojemna, aby spełnić wymagania, zawarte w punktach dot. wymagań dotyczących schematu relacyjnego.
 
-
+# ENG: 
 # Project "Designing an Application in Oracle Application Express"
 
 Together with one other person, we developed a database application using Oracle APEX.  
